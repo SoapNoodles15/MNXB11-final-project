@@ -12,7 +12,7 @@
     - Plot the temperature on 4 distinct dates over the years
     - Plot the coldest and warmest temperatures for the years
 
-## Tasks
+## Programming tasks
 
 | Task Description                          | Assignee | Status       |
 |-------------------------------------------|----------|--------------|
@@ -23,3 +23,14 @@
 | Write the ROOT code for the first goal   | Name 3   | Not Started    |
 | Write the ROOT code for the second goal  | Name 3   | Not Started    |
 | Write the ROOT code for the third goal   | Name 3   | Not Started    |
+
+## Writing tasks
+
+| Task Description | Assignee | Status |
+|-------------------------------------------|----------|--------------|
+| Make the LaTeX template | Name | Not Started |
+| Introduction | Name | Not Started |
+| Method | Name | Not Started |
+| First goal results | Name | Not Started |
+| Second goal results | Name | Not Started |
+| Third goal results | Name | Not Started |
