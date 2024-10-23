@@ -7,3 +7,6 @@ All notable changes to this project will be documented in this file.
 - Added the datasets
 - Created the cleaner and filter script
 - Created the basic main.cxx and Makefile files
+
+## 23/10/2024
+- Added the CSV parser header files and modified the makefile accordingly
