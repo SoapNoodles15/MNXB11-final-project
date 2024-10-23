@@ -2,7 +2,7 @@ CXX := g++
 CXXWARNINGS := -Wall -Wextra -Werror
 CXXOPT := -O3
 CXXSTD := -std=c++17
-INCLUDES := 
+INCLUDES := -I external/include
 LIBDIRS := 
 
 

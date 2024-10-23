@@ -16,13 +16,14 @@
 
 | Task Description                          | Assignee | Status       |
 |-------------------------------------------|----------|--------------|
-| Write the cleaner/filter script          | Sebastian   | In Progress  |
+| Write the cleaner/filter script          | Sebastian   | Completed  |
 | Write the C++ code for the first goal    | Samuel   | Not Started  |
 | Write the C++ code for the second goal   | Amanda   | Not Started    |
 | Write the C++ code for the third goal    | Sebastian   | Not Started    |
 | Write the ROOT code for the first goal   | Samuel   | Not Started    |
 | Write the ROOT code for the second goal  | Amanda   | Not Started    |
 | Write the ROOT code for the third goal   | Sebastian   | Not Started    |
+| Write the main executable | Name | Not Started |
 
 ## Writing tasks
 
