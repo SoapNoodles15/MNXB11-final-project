@@ -16,4 +16,4 @@ All notable changes to this project will be documented in this file.
 - Created the code for extracting data for the coldest/warmest temperatures
 - Implemented the pre-processing bash script execution in the main executable
 - Implemented the choice of which data is desired in the main executable
-
+- Implemented filepath input and mode choice as CLI inputs

@@ -1,33 +1,68 @@
-#include<iostream>
-#include "csv.hpp"
+#include <iostream>
 #include "coldwarm.hpp"
 #include <cstdlib>
+#include <filesystem>
 
 using namespace std;
-int usage(){
-    cout << "====================" << endl;
-    cout << "Insufficient arguments" << endl;
-    cout << "Use the following:" << endl;
-    cout <<  "./main <filepath> <mode>" << endl;
-    cout << "Example:" << endl;
-    cout << "./main ../datasets/big.csv coldwarm" << endl;
-    cout << "====================" << endl;
-    return 0;
+namespace fs = std::filesystem;
+
+// Function to check if the mode is valid
+bool isValidMode(const string& mode) {
+    return mode == "coldwarm" || mode == "4dates" || mode == "winter";
 }
-int main(int argc, char* argv[]) {
-    if (argc < 3){
-        usage();
+
+// Function to check if the filepath is valid
+bool isValidFilePath(const string& filepath) {
+    return fs::exists(filepath) && fs::is_regular_file(filepath); // Checking if file exists and is a regular file
+}
+
+int main() {
+    string mode;
+    string filepath;
+
+    cout << "Enter the filepath: ";
+    getline(cin, filepath);
+
+    
+
+    if (!isValidFilePath(filepath)) {
+        cout << "Invalid filepath!" << endl;
+        return 1;
     }
-    else{
-        string command = "./cleaner_filter.sh " + string(argv[1]);
+
+    while (true) {
+        cout << "-----------------------" << endl;
+        cout << "Choose a mode or type 'exit' to quit. " << endl;
+        cout << " " << endl;
+        cout << "Modes: coldwarm, 4dates, winter" << endl;
+        cout << "-----------------------" << endl;
+        getline(cin, mode);
+
+        if (mode == "exit") {
+            cout << "-----------------------" << endl;
+            cout << "Exiting program..." << endl;
+            break;
+        }
+
+        if (!isValidMode(mode)) {
+            cerr << "Invalid mode selected!" << endl;
+            continue;
+        }
+
+        // Pre-processing script is run here
+        string command = "./cleaner_filter.sh " + filepath;
         int cleanUp = system(command.c_str());
 
-        if (cleanUp != 0){
-            cerr << "Error executing the script:" << command << endl;
+        // Checking if it ran correctly
+        if (cleanUp != 0) {
+            cerr << "Error executing the script: " << command << endl;
             return cleanUp;
         }
 
-        if (string(argv[2]) == "coldwarm")
-            return getColdWarm(argc, argv);
+        if (mode == "coldwarm") {
+            return getColdWarm(filepath);
+        }
     }
+
+    return 0; // Return success
 }

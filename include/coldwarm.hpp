@@ -1,6 +1,8 @@
 #ifndef COLD_WARM_HPP
 #define COLD_WARM_HPP
 
-int getColdWarm(int argc, char* argv[]);
+#include <string>
+
+int getColdWarm(std::string filepath);
 
 #endif
