@@ -70,37 +70,5 @@ int getFourDates(string filename) {
     }
 
 
-
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
- 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  
