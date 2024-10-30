@@ -7,8 +7,8 @@ INCLUDES := -I include -I external/include  # Ensure these paths are correct
 CXXFLAGS := $(CXXWARNINGS) $(CXXSTD) $(CXXOPT) $(INCLUDES)
 
 # Source files
-SRCS := src/coldwarm.cxx main.cxx  # main.cxx is in the root directory
-OBJS := src/coldwarm.o src/main.o    # Define object files explicitly
+SRCS := src/coldwarm.cxx main.cxx  src/destinctdates.cxx # main.cxx is in the root directory
+OBJS := src/coldwarm.o src/main.o  src/destinctdates.o # Define object files explicitly
 
 # Target executable
 TARGET := main

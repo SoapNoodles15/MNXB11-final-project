@@ -1,5 +1,6 @@
 #include <iostream>
 #include "coldwarm.hpp"
+#include "destinctdates.h"
 #include <cstdlib>
 #include <filesystem>
 
@@ -62,6 +63,8 @@ int main() {
         if (mode == "coldwarm") {
             return getColdWarm(filepath);
         }
+        if (mode == "4dates")
+            return getFourDates(filepath);
     }
 
     return 0; // Return success
