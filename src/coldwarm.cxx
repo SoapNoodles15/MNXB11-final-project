@@ -4,6 +4,13 @@
 #include <vector>
 #include <map>
 #include <filesystem>
+#include <TCanvas.h>
+#include <TGraph.h>
+#include <TLegend.h>
+#include <TAxis.h>
+#include <algorithm>
+#include <TH1F.h>
+
 
 using namespace std;
 using namespace csv;
@@ -17,6 +24,7 @@ int extractYear(const string& date) {
 void parseCSV(const string& filename, vector<int>& years, vector<double>& coldTemps, vector<double>& warmTemps) {
     CSVFormat format; // Specifying the data format
     format.delimiter(','); 
+    format.no_header();
 
     try {
         CSVReader reader(filename, format);  // Initializing CSVReader with filename and the desired format
@@ -68,6 +76,90 @@ void parseCSV(const string& filename, vector<int>& years, vector<double>& coldTe
     }
 }
 
+// A function used to plot with ROOT
+void plotColdWarm(vector<int>& years, vector<double>& coldTemps, vector<double>& warmTemps) {
+    int n = years.size();
+
+    double coldMin = *min_element(coldTemps.begin(), coldTemps.end());
+    double coldMax = *max_element(coldTemps.begin(), coldTemps.end());
+    double warmMin = *min_element(warmTemps.begin(), warmTemps.end());
+    double warmMax = *max_element(warmTemps.begin(), warmTemps.end());
+
+    int yearMin = years[0];
+    int yearMax = years.back();
+
+
+    auto coldCanvas = new TCanvas("canvas1", "Coldest Temperatures by Year", 800, 600);
+    auto coldGraph = new TGraph(n);
+    for (int i=0; i < n; ++i) {
+        coldGraph->SetPoint(i, years[i], coldTemps[i]);
+    }
+    coldCanvas->SetGrid();
+    coldGraph->SetMarkerColor(kBlue);
+    coldGraph->SetMarkerSize(1.5);
+    coldGraph->GetYaxis()->SetRangeUser(coldMin - 5, coldMax + 5);
+    coldGraph->GetXaxis()->SetRangeUser(yearMin, yearMax);
+    //coldGraph->SetLineColor(kBlue);
+    coldGraph->Draw("AP");
+
+
+    auto coldLegend = new TLegend(0.7, 0.5, 0.9, 0.7);
+    coldLegend->SetTextSize(0.03);
+    coldLegend->AddEntry(coldGraph, "Coldest Temperatures", "lp");
+    coldLegend->Draw();
+
+    coldCanvas->Update();
+    coldCanvas->SaveAs("cold_temp.png");
+
+
+
+    auto warmCanvas = new TCanvas("canvas2", "Warmest Temperatures by Year", 800, 600);
+    auto warmGraph = new TGraph(n);
+    for (int i=0; i < n; ++i) {
+        warmGraph->SetPoint(i, years[i], warmTemps[i]);
+    }
+    warmCanvas->SetGrid();
+    warmGraph->SetMarkerColor(kRed);
+    //warmGraph->SetLineColor(kRed);
+    warmGraph->SetMarkerSize(1.5);
+    warmGraph->GetYaxis()->SetRangeUser(warmMin - 5, warmMax + 5);
+    warmGraph->GetXaxis()->SetRangeUser(yearMin, yearMax);
+    warmGraph->Draw("AP");
+
+    auto warmLegend = new TLegend(0.7, 0.5, 0.9, 0.7);
+    warmLegend->SetTextSize(0.03);
+    warmLegend->AddEntry(warmGraph, "Warmest Temperatures", "lp");
+    warmLegend->Draw();
+
+    warmCanvas->Update();
+    warmCanvas->SaveAs("warm_temp.png");
+
+    /*
+    double minCold = *min_element(coldTemps.begin(), coldTemps.end());
+    double maxCold = *max_element(coldTemps.begin(), coldTemps.end());
+    double minWarm = *min_element(warmTemps.begin(), warmTemps.end());
+    double maxWarm = *max_element(warmTemps.begin(), warmTemps.end());
+
+    double yMin = min(minCold, minWarm);
+    double yMax = max(maxCold, maxWarm);
+    
+    coldGraph->GetYaxis()->SetRangeUser(yMin - 5, yMax + 5);
+    */
+    auto coldHistCanvas = new TCanvas("canvas3", "Coldest Temperatures Histogram", 800, 600);
+    auto coldHist = new TH1F("hist", "Cold Temperature Histogram", 100, -50, 10);
+    for (double temp : coldTemps) {
+        coldHist->Fill(temp);
+    }
+    coldHist->SetFillColor(kRed+1);
+    coldHist->Draw();
+    coldHistCanvas->Update();
+    coldHistCanvas->SaveAs("cold_hist.png");
+
+}
+
+
+
+
 // A function to actually obtain the data
 int getColdWarm(string filePath) {
     string filePathName = std::filesystem::path(filePath).filename().string();
@@ -79,11 +171,13 @@ int getColdWarm(string filePath) {
 
     parseCSV(filename, years, coldestTemps, warmestTemps);
 
+    plotColdWarm(years, coldestTemps, warmestTemps);
+    /*
     // Printing out the years and temperatures
     cout << "Years and Temperatures:" << endl;
     for (size_t i = 0; i < years.size(); i++) {
         cout << "Year: " << years[i] << ", Coldest Temp: " << coldestTemps[i] << ", Warmest Temp: " << warmestTemps[i] << endl;
     }
-
+    */
     return 0;
 }

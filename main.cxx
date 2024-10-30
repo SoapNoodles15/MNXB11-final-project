@@ -2,6 +2,7 @@
 #include "coldwarm.hpp"
 #include <cstdlib>
 #include <filesystem>
+#include <TApplication.h>
 
 using namespace std;
 namespace fs = std::filesystem;
@@ -17,6 +18,8 @@ bool isValidFilePath(const string& filepath) {
 }
 
 int main() {
+    TApplication app("app", nullptr, nullptr);
+
     string mode;
     string filepath;
 
@@ -60,7 +63,11 @@ int main() {
         }
 
         if (mode == "coldwarm") {
-            return getColdWarm(filepath);
+            getColdWarm(filepath);
+            cout << "Graph generated. Press Enter to exit..." << endl;
+            cin.get();
+            app.Terminate(); // Wait for user input to ensure they see the graph
+            break; // Exit the loop after processing
         }
     }
 

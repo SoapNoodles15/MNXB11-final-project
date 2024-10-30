@@ -4,7 +4,11 @@ CXXOPT := -O3
 CXXSTD := -std=c++17
 INCLUDES := -I include -I external/include  # Ensure these paths are correct
 
-CXXFLAGS := $(CXXWARNINGS) $(CXXSTD) $(CXXOPT) $(INCLUDES)
+# ROOT
+ROOTCFLAGS := $(shell root-config --cflags)
+ROOTLIBS := $(shell root-config --glibs)
+
+CXXFLAGS := $(CXXWARNINGS) $(CXXSTD) $(CXXOPT) $(INCLUDES) $(ROOTCFLAGS)
 
 # Source files
 SRCS := src/coldwarm.cxx main.cxx  # main.cxx is in the root directory
@@ -18,7 +22,7 @@ all: $(TARGET)
 
 # Rule to link the object files into the executable
 $(TARGET): $(OBJS)
-	$(CXX) $(CXXFLAGS) -o $(TARGET) $(OBJS)
+	$(CXX) $(CXXFLAGS) -o $(TARGET) $(OBJS) $(ROOTLIBS)
 
 # Rule to compile .cxx files into .o files
 src/%.o: src/%.cxx
