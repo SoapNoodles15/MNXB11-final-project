@@ -7,15 +7,18 @@
 ## How to use the code
 
 The program uses 3 header and corresponding .cxx files, each corresponding to a different type of data. As pre-processing, the program utilizes a bash script that creates files in a format specific to each type of data. The ROOT is implemented within each header file. As such, the main function in main.cxx only uses the functions from the headers and returns appropriate plots. 
+
 The CSV files are parsed accordingly within the respective header files using Vince's CSV Parser library and some of the standard libraries.
 
-NOTE: YOU NEED TO BE IN THE COURSE CONTAINER FOR ROOT TO WORK
+**NOTE: YOU NEED TO BE IN THE COURSE CONTAINER OR ROOT INSTALLED FOR THE PROGRAM TO WORK**
+
 To run the program, first you need to run make from the root directory. Then, after compilation is finished, you will be able to run ./main. Upon executing this command you will be prompted to provide a filepath to a CSV file. You can provide an absolute path or a relative path to the root folder. The format of the data in the CSV file has to be "YYYY-MM-DD;something;TEMPERATURE". Afterwards, you will be asked to choose one of the three modes: coldwarm, 4dates, and winter. Each of these corresponds to a type of data: 
 - coldwarm - coldest and warmest temperatures of each year,
 - 4dates - the temperatures on 03 April, 26 June, 29 September, and 24 December,
 - winter - average temperatures of winter (November - February) for each year.
 
 You will also be able to type "exit" which will close the program. The program will also terminate if an invalid filepath is provided.
+
 After execution, you will be presented with a graph (histograms for cold/warm and 4 dates, a line graph with a linear fit for average winter temperatures). To close the graph and terminate the application, you must press enter in the CLI. The graphs generated will be in the root folder along with the CSV files created by the pre-processing bash script.
 
 ## How the code works
