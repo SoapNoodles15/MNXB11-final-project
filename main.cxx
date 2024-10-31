@@ -3,6 +3,8 @@
 #include "destinctdates.h"
 #include <cstdlib>
 #include <filesystem>
+#include <TApplication.h>
+
 
 using namespace std;
 namespace fs = std::filesystem;
@@ -18,6 +20,7 @@ bool isValidFilePath(const string& filepath) {
 }
 
 int main() {
+    TApplication app("app", nullptr, nullptr);
     string mode;
     string filepath;
 
@@ -63,8 +66,12 @@ int main() {
         if (mode == "coldwarm") {
             return getColdWarm(filepath);
         }
-        if (mode == "4dates")
-            return getFourDates(filepath);
+        if (mode == "4dates"){
+            getFourDates(filepath);
+            cin.get();
+            app.Terminate();
+            break;
+        }      
     }
 
     return 0; // Return success
