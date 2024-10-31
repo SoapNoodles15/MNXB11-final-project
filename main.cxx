@@ -1,6 +1,7 @@
 #include <iostream>
 #include "coldwarm.hpp"
 #include "destinctdates.h"
+#include "winter3.h"
 #include <cstdlib>
 #include <filesystem>
 #include <TApplication.h>
@@ -68,6 +69,12 @@ int main() {
         }
         if (mode == "4dates"){
             getFourDates(filepath);
+            cin.get();
+            app.Terminate();
+            break;
+        }
+        if (mode == "winter"){
+            getWinter(filepath);
             cin.get();
             app.Terminate();
             break;

@@ -11,8 +11,8 @@ ROOTLIBS := $(shell root-config --glibs)
 CXXFLAGS := $(CXXWARNINGS) $(CXXSTD) $(CXXOPT) $(INCLUDES) $(ROOTCFLAGS)
 
 # Source files
-SRCS := src/coldwarm.cxx src/destinctdates.cxx main.cxx  # main.cxx is in the root directory
-OBJS := src/coldwarm.o src/destinctdates.o src/main.o    # Define object files explicitly
+SRCS := src/coldwarm.cxx src/destinctdates.cxx main.cxx src/winter3.cxx # main.cxx is in the root directory
+OBJS := src/coldwarm.o src/destinctdates.o src/main.o  src/winter3.o  # Define object files explicitly
 
 # Target executable
 TARGET := main
