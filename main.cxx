@@ -1,8 +1,10 @@
 #include <iostream>
 #include "coldwarm.hpp"
+#include "winter3.hpp"
 #include <cstdlib>
 #include <filesystem>
 #include <TApplication.h>
+
 
 using namespace std;
 namespace fs = std::filesystem;
@@ -68,6 +70,13 @@ int main() {
             cin.get();
             app.Terminate(); // Wait for user input to ensure they see the graph
             break; // Exit the loop after processing
+        }
+
+        if (mode == "winter") {
+            getWinter(filepath);
+            cin.get();
+            app.Terminate();
+            break;
         }
     }
 

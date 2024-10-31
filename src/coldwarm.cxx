@@ -46,11 +46,11 @@ void parseCSV(const string& filename, vector<int>& years, vector<double>& coldTe
                 int year = extractYear(date);  // Getting the year from date
                 
                 if (coldTempsMap.find(year) == coldTempsMap.end() || temperature < coldTempsMap[year]) { // Checking if there is a temp for a year and comparing
-                    coldTempsMap[year] = temperature; // Update coldest temperature
+                    coldTempsMap[year] = temperature; // Updating coldest temperature
                 }
 
                 if (warmTempsMap.find(year) == warmTempsMap.end() || temperature > warmTempsMap[year]) { 
-                    warmTempsMap[year] = temperature; // Update warmest temperature
+                    warmTempsMap[year] = temperature; // Updating warmest temperature
                 }
             } else {
                 cout << "Row " << rowCount << ": Skipping empty or malformed row" << endl; 
@@ -79,7 +79,7 @@ void parseCSV(const string& filename, vector<int>& years, vector<double>& coldTe
 // A function used to plot with ROOT
 void plotColdWarm(vector<int>& years, vector<double>& coldTemps, vector<double>& warmTemps) {
     int n = years.size();
-
+    
     double coldMin = *min_element(coldTemps.begin(), coldTemps.end());
     double coldMax = *max_element(coldTemps.begin(), coldTemps.end());
     double warmMin = *min_element(warmTemps.begin(), warmTemps.end());
@@ -88,7 +88,7 @@ void plotColdWarm(vector<int>& years, vector<double>& coldTemps, vector<double>&
     int yearMin = years[0];
     int yearMax = years.back();
 
-
+    
     auto coldCanvas = new TCanvas("canvas1", "Coldest Temperatures by Year", 800, 600);
     auto coldGraph = new TGraph(n);
     for (int i=0; i < n; ++i) {
@@ -99,8 +99,8 @@ void plotColdWarm(vector<int>& years, vector<double>& coldTemps, vector<double>&
     coldGraph->SetMarkerSize(1.5);
     coldGraph->GetYaxis()->SetRangeUser(coldMin - 5, coldMax + 5);
     coldGraph->GetXaxis()->SetRangeUser(yearMin, yearMax);
-    //coldGraph->SetLineColor(kBlue);
-    coldGraph->Draw("AP");
+    coldGraph->SetLineColor(kBlue+2);
+    coldGraph->Draw("");
 
 
     auto coldLegend = new TLegend(0.7, 0.5, 0.9, 0.7);
@@ -119,12 +119,12 @@ void plotColdWarm(vector<int>& years, vector<double>& coldTemps, vector<double>&
         warmGraph->SetPoint(i, years[i], warmTemps[i]);
     }
     warmCanvas->SetGrid();
-    warmGraph->SetMarkerColor(kRed);
+    warmGraph->SetMarkerColor(kRed+2);
     //warmGraph->SetLineColor(kRed);
     warmGraph->SetMarkerSize(1.5);
     warmGraph->GetYaxis()->SetRangeUser(warmMin - 5, warmMax + 5);
     warmGraph->GetXaxis()->SetRangeUser(yearMin, yearMax);
-    warmGraph->Draw("AP");
+    warmGraph->Draw();
 
     auto warmLegend = new TLegend(0.7, 0.5, 0.9, 0.7);
     warmLegend->SetTextSize(0.03);
@@ -134,44 +134,55 @@ void plotColdWarm(vector<int>& years, vector<double>& coldTemps, vector<double>&
     warmCanvas->Update();
     warmCanvas->SaveAs("warm_temp.png");
 
-    /*
-    double minCold = *min_element(coldTemps.begin(), coldTemps.end());
-    double maxCold = *max_element(coldTemps.begin(), coldTemps.end());
-    double minWarm = *min_element(warmTemps.begin(), warmTemps.end());
-    double maxWarm = *max_element(warmTemps.begin(), warmTemps.end());
 
-    double yMin = min(minCold, minWarm);
-    double yMax = max(maxCold, maxWarm);
-    
-    coldGraph->GetYaxis()->SetRangeUser(yMin - 5, yMax + 5);
-    */
+
+
     auto coldHistCanvas = new TCanvas("canvas3", "Coldest Temperatures Histogram", 800, 600);
-    auto coldHist = new TH1F("hist", "Cold Temperature Histogram", 100, -50, 10);
+    auto coldHist = new TH1F("hist1", "Coldest Temperatures Histogram", 100, coldMin - 5, coldMax + 5);
     for (double temp : coldTemps) {
         coldHist->Fill(temp);
     }
-    coldHist->SetFillColor(kRed+1);
+    coldHist->SetFillColor(kBlue+2);
+    coldHist->SetLineColor(kBlack);
+    coldHist->GetYaxis()->SetTitle("Count");
+    coldHist->GetXaxis()->SetTitle("Temperature");
+    coldHist->GetYaxis()->CenterTitle();
+    coldHist->GetXaxis()->CenterTitle();
     coldHist->Draw();
     coldHistCanvas->Update();
     coldHistCanvas->SaveAs("cold_hist.png");
 
+    auto warmHistCanvas = new TCanvas("canvas4", "Warmest Temperatures Histogram", 800, 600);
+    auto warmHist = new TH1F("hist2", "Warmest Temperatures Histogram", 100, warmMin - 5, warmMax + 5);
+    for (double temp : warmTemps) {
+        warmHist->Fill(temp);
+    }
+    warmHist->SetFillColor(kRed+2);
+    warmHist->SetLineColor(kBlack);
+    warmHist->GetYaxis()->SetTitle("Count");
+    warmHist->GetXaxis()->SetTitle("Temperature");
+    warmHist->GetYaxis()->CenterTitle();
+    warmHist->GetXaxis()->CenterTitle();
+    warmHist->Draw();
+    warmHistCanvas->Update();
+    warmHistCanvas->SaveAs("warm_hist.png");
 }
 
 
 
 
-// A function to actually obtain the data
+// A function to actually obtain the data and plot it
 int getColdWarm(string filePath) {
-    string filePathName = std::filesystem::path(filePath).filename().string();
-    string filename = "ColdestWarmest_filtered_" + filePathName;
+    string filePathName = std::filesystem::path(filePath).filename().string(); // Get the original file name
+    string filename = "ColdestWarmest_filtered_" + filePathName; // Get the file name with the desired data after pre-processing
 
-    vector<int> years;
+    vector<int> years; // Initialize the data vectors
     vector<double> coldestTemps;
     vector<double> warmestTemps;
 
-    parseCSV(filename, years, coldestTemps, warmestTemps);
+    parseCSV(filename, years, coldestTemps, warmestTemps); // Parse the CSV to fill those vectors
 
-    plotColdWarm(years, coldestTemps, warmestTemps);
+    plotColdWarm(years, coldestTemps, warmestTemps); // Plot them
     /*
     // Printing out the years and temperatures
     cout << "Years and Temperatures:" << endl;

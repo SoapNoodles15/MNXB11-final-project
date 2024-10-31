@@ -1,11 +1,8 @@
-#ifndef WINTER3_H
-#define WINTER3_H
+#ifndef WINTER3_HPP
+#define WINTER3_HPP
 
 #include <string>
-#include <map>
-#include <vector>
-#include "csv.hpp"
 
-
+int getWinter(std::string filename);
 
 #endif // WINTER3_H
