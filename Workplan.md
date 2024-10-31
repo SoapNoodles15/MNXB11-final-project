@@ -22,7 +22,7 @@
 | Write the ROOT code for the first goal   | Samuel   | Completed    |
 | Write the ROOT code for the second goal  | Amanda   | Completed    |
 | Write the ROOT code for the third goal   | Sebastian   | Completed    |
-| Write the main executable | Name | In Progress |
+| Write the main executable | All | Completed |
 
 ## Writing tasks
 

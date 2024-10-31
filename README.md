@@ -14,6 +14,7 @@ To run the program, first you need to run make from the root directory. Then, af
 - coldwarm - coldest and warmest temperatures of each year,
 - 4dates - the temperatures on 03 April, 26 June, 29 September, and 24 December,
 - winter - average temperatures of winter (November - February) for each year.
+
 You will also be able to type "exit" which will close the program. The program will also terminate if an invalid filepath is provided.
 After execution, you will be presented with a graph (histograms for cold/warm and 4 dates, a line graph with a linear fit for average winter temperatures). To close the graph and terminate the application, you must press enter in the CLI. The graphs generated will be in the root folder along with the CSV files created by the pre-processing bash script.
 
