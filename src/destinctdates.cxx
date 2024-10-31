@@ -10,6 +10,7 @@
 #include <TAxis.h>
 #include <algorithm>
 #include <TH1F.h>
+#include <TStyle.h>
 
 
 #include "csv.hpp"
@@ -43,13 +44,16 @@ int MakeColumns(const string filename, vector<int>& years, vector<double>& temp)
 }
 
 void makehist(vector<double>& april, vector<double>& june, vector<double>& september, vector<double>& december){
-     
-    auto Canvas = new TCanvas("canvas", "april histogram", 800, 600);
     
-    auto spring = new TH1F("april", "something", 100,-30,40);
+
+    auto Canvas = new TCanvas("canvas"," Four dates ", 800, 600);
+    gStyle->SetOptStat(0);
+    auto spring = new TH1F("april", "temperatures on our birthdays + christmas", 100,-30,40);
     auto summer = new TH1F("june", "something", 100,-30,40);
     auto fall = new TH1F("september", "something", 100, -30, 40);
     auto winter = new TH1F("december", "something", 100, -30, 40);
+
+    spring->GetYaxis()->SetRangeUser(0,30);
 
     for(double temp : april){
         spring->Fill(temp);
@@ -66,26 +70,42 @@ void makehist(vector<double>& april, vector<double>& june, vector<double>& septe
     spring->SetFillColor(kGreen +2);
     spring->SetFillStyle(3004);
     spring->SetLineColor(kGreen +2);
+    // spring->SetStats();
+
+
 
     summer->SetFillColor(kBlue +2);
     summer->SetFillStyle(3005);
     summer->SetLineColor(kBlue +2);
+    // summer->SetStats(0);
 
     fall->SetFillColor(kBlack);
     fall->SetFillStyle(3007);
     fall->SetLineColor(kBlack);
+    // fall->SetStats(0);
 
     winter->SetFillColor(kRed +2);
     winter->SetFillStyle(3005);
     winter->SetLineColor(kRed +2);
+    // winter->SetStats(0);
 
     spring->Draw();
     summer->Draw("SAME");
     fall->Draw("SAME");
     winter->Draw("SAME");
+
+    auto legend = new TLegend(0.7, 0.7, 0.9, 0.9);
+    legend->AddEntry(spring, "3rd of april", "f");
+    legend->AddEntry(summer, "26th of june", "f");
+    legend->AddEntry(fall, "29th of september", "f");
+    legend->AddEntry(winter, "24th of december", "f");
+    legend->Draw();
+
+
     
     Canvas->Update();
-    Canvas->SaveAs("plot.png");
+
+
 
 }
 
