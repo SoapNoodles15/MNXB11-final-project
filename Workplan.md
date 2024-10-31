@@ -4,7 +4,6 @@
 - **Sebastian Jakubiak** - Release manager
 - **Samuel Anand** - Developer
 - **Amanda Sjölin** - Developer
-- **Sampurna Choudhury** - Developer
 
 ## Goals
 - Main goals:
@@ -17,12 +16,12 @@
 | Task Description                          | Assignee | Status       |
 |-------------------------------------------|----------|--------------|
 | Write the cleaner/filter script          | Sebastian   | Completed  |
-| Write the C++ code for the first goal    | Samuel   | In Progress  |
-| Write the C++ code for the second goal   | Amanda   | In Progress    |
-| Write the C++ code for the third goal    | Sebastian   | In Progress    |
-| Write the ROOT code for the first goal   | Samuel   | Not Started    |
-| Write the ROOT code for the second goal  | Amanda   | Not Started    |
-| Write the ROOT code for the third goal   | Sebastian   | Not Started    |
+| Write the C++ code for the first goal    | Samuel   | Completed  |
+| Write the C++ code for the second goal   | Amanda   | Completed    |
+| Write the C++ code for the third goal    | Sebastian   | Completed    |
+| Write the ROOT code for the first goal   | Samuel   | Completed    |
+| Write the ROOT code for the second goal  | Amanda   | Completed    |
+| Write the ROOT code for the third goal   | Sebastian   | Completed    |
 | Write the main executable | Name | In Progress |
 
 ## Writing tasks

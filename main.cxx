@@ -65,16 +65,22 @@ int main() {
         }
 
         if (mode == "coldwarm") {
-            return getColdWarm(filepath);
+            getColdWarm(filepath);
+            cout << "Press Enter to close the application..." << endl;
+            cin.get();
+            app.Terminate();
+            break;
         }
         if (mode == "4dates"){
             getFourDates(filepath);
+            cout << "Press Enter to close the application..." << endl;
             cin.get();
             app.Terminate();
             break;
         }
         if (mode == "winter"){
             getWinter(filepath);
+            cout << "Press Enter to close the application..." << endl;
             cin.get();
             app.Terminate();
             break;
