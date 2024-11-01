@@ -79,10 +79,12 @@ void parseCSV(const string& filename, vector<int>& years, vector<double>& coldTe
 // A function used to plot with ROOT
 void plotColdWarm(vector<double>& coldTemps, vector<double>& warmTemps) {
 
+    /*
     double coldMin = *min_element(coldTemps.begin(), coldTemps.end());
     double coldMax = *max_element(coldTemps.begin(), coldTemps.end());
     double warmMin = *min_element(warmTemps.begin(), warmTemps.end());
     double warmMax = *max_element(warmTemps.begin(), warmTemps.end());
+    */
     /*
     int n = years.size();
     
@@ -141,7 +143,7 @@ void plotColdWarm(vector<double>& coldTemps, vector<double>& warmTemps) {
 
     */
     auto coldHistCanvas = new TCanvas("canvas3", "Coldest Temperatures Histogram", 800, 600);
-    auto coldHist = new TH1F("Stats", "Coldest Temperatures Histogram", 100, coldMin - 5, coldMax + 5);
+    auto coldHist = new TH1F("Stats", "Coldest Temperatures Histogram", 100, -50, 10);
     for (double temp : coldTemps) {
         coldHist->Fill(temp);
     }
@@ -156,7 +158,7 @@ void plotColdWarm(vector<double>& coldTemps, vector<double>& warmTemps) {
     coldHistCanvas->SaveAs("cold_hist.png");
 
     auto warmHistCanvas = new TCanvas("canvas4", "Warmest Temperatures Histogram", 800, 600);
-    auto warmHist = new TH1F("Stats", "Warmest Temperatures Histogram", 100, warmMin - 5, warmMax + 5);
+    auto warmHist = new TH1F("Stats", "Warmest Temperatures Histogram", 100, -10, 50);
     for (double temp : warmTemps) {
         warmHist->Fill(temp);
     }

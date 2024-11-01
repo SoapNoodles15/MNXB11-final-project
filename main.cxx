@@ -21,16 +21,16 @@ bool isValidFilePath(const string& filepath) {
 }
 
 int main() {
-    TApplication app("app", nullptr, nullptr);
-    string mode;
+    TApplication app("app", nullptr, nullptr); // Initializing the ROOT application
+    string mode; // Initializing the mode and filepath strings
     string filepath;
 
     cout << "Enter the filepath: ";
-    getline(cin, filepath);
+    getline(cin, filepath); // Obtaining the filepath from user input
 
     
 
-    if (!isValidFilePath(filepath)) {
+    if (!isValidFilePath(filepath)) { // Checking if the filepath is valid
         cout << "Invalid filepath!" << endl;
         return 1;
     }
@@ -41,15 +41,15 @@ int main() {
         cout << " " << endl;
         cout << "Modes: coldwarm, 4dates, winter" << endl;
         cout << "-----------------------" << endl;
-        getline(cin, mode);
+        getline(cin, mode); // Getting the mode from user input
 
-        if (mode == "exit") {
+        if (mode == "exit") { // If user decides to exit
             cout << "-----------------------" << endl;
             cout << "Exiting program..." << endl;
             break;
         }
 
-        if (!isValidMode(mode)) {
+        if (!isValidMode(mode)) { // Checking if mode is valid
             cerr << "Invalid mode selected!" << endl;
             continue;
         }
@@ -64,7 +64,7 @@ int main() {
             return cleanUp;
         }
 
-        if (mode == "coldwarm") {
+        if (mode == "coldwarm") { // If statements executing functions depending on what mode the user chose
             getColdWarm(filepath);
             cout << "Press Enter to close the application..." << endl;
             cin.get();
