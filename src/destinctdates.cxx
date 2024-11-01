@@ -18,24 +18,19 @@ using namespace std;
 
 using namespace csv;
 
-int Year(const string& date1) {
+int Year(const string& date1) { // converting the years into integers
     return stoi(date1.substr(0, 4));
 }
 
-int MakeColumns(const string filename, vector<int>& years, vector<double>& temp) {
+//function that reads the csv and takes the temperature and the dates and put it two vectors. 
+int MakeColumns(const string filename, vector<int>& years, vector<double>& temp) { 
     CSVReader reader(filename);
  
 
-    //vector<string> date;
-    //vector<double> temp;
-
-
-
     for (CSVRow& row : reader) {
         // Add values from the specified columns (by index) to the vectors
-        //date.push_back(row[0].get<string>());
         int year = Year(row[0].get<string>());
-        years.push_back(year);
+        years.push_back(year); //using the converting function
         temp.push_back(row[2].get<double>());
 
     }
@@ -43,12 +38,14 @@ int MakeColumns(const string filename, vector<int>& years, vector<double>& temp)
     return 0;
 }
 
+//function that does 4 plots on one canvas 
 void makehist(vector<double>& april, vector<double>& june, vector<double>& september, vector<double>& december){
+
     
 
-    auto Canvas = new TCanvas("canvas"," Four dates ", 800, 600);
-    gStyle->SetOptStat(0);
-    auto spring = new TH1F("april", "temperatures on our birthdays + christmas", 100,-30,40);
+    auto Canvas = new TCanvas("canvas"," Four dates ", 800, 600); //canvas to display the code
+    gStyle->SetOptStat(0); //making the stats for the histograms not show
+    auto spring = new TH1F("april", "City", 100,-30,40); //making the historgams, the first one decides the title. 
     auto summer = new TH1F("june", "something", 100,-30,40);
     auto fall = new TH1F("september", "something", 100, -30, 40);
     auto winter = new TH1F("december", "something", 100, -30, 40);
@@ -67,6 +64,8 @@ void makehist(vector<double>& april, vector<double>& june, vector<double>& septe
     for(double temp : december){
         winter->Fill(temp);
     }
+
+    //setting color and style to make them different 
     spring->SetFillColor(kGreen +2);
     spring->SetFillStyle(3004);
     spring->SetLineColor(kGreen +2);
@@ -94,6 +93,8 @@ void makehist(vector<double>& april, vector<double>& june, vector<double>& septe
     fall->Draw("SAME");
     winter->Draw("SAME");
 
+
+    // making the legends
     auto legend = new TLegend(0.7, 0.7, 0.9, 0.9);
     legend->AddEntry(spring, "3rd of april", "f");
     legend->AddEntry(summer, "26th of june", "f");
@@ -104,13 +105,14 @@ void makehist(vector<double>& april, vector<double>& june, vector<double>& septe
 
     
     Canvas->Update();
+    Canvas->SaveAs("uppsala.png");
 
 
 
 }
 
 
-
+// main fuction using the other funcitons to get the vectors and the plotting
 int getFourDates(string filename) {
     string filePathName = std::filesystem::path(filename).filename().string();
     string april = "03April_filtered_" + filePathName;
